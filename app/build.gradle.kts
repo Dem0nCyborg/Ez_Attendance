@@ -55,6 +55,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
     implementation("com.google.android.material:material:1.11.0")
+    implementation(libs.androidx.activity)
     //endregion
     //region Android Unit Test and U.I. Test Library
     testImplementation("junit:junit:4.13.2")
