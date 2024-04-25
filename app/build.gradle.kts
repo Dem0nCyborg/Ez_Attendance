@@ -56,6 +56,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
     implementation("com.google.android.material:material:1.11.0")
     implementation(libs.androidx.activity)
+    //volley dependency
+    implementation("com.android.volley:volley:1.2.1")
     //endregion
     //region Android Unit Test and U.I. Test Library
     testImplementation("junit:junit:4.13.2")

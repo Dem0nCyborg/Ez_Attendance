@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,19 +16,30 @@
         android:theme="@style/Theme.EZ_Attendance"
         tools:targetApi="31">
         <activity
+            android:name=".professor.updateTimetable"
+            android:exported="false" />
+        <activity
+            android:name=".ReadNFC"
+            android:exported="false" />
+        <activity
+            android:name=".students.studentsDetails"
+            android:exported="false" />
+        <activity
+            android:name=".professor.profDetails"
+            android:exported="false"
+            android:theme="@style/Theme.EZ_Attendance" />
+        <activity
             android:name=".login.UserSelection"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 

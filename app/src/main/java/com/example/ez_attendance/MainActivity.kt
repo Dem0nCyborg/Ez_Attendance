@@ -11,9 +11,18 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.ez_attendance.databinding.ActivityBinder
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
 
 public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeListener, NfcAdapter.ReaderCallback {
 
@@ -36,7 +45,7 @@ public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeLis
         binder?.setLifecycleOwner(this@MainActivity)
         super.onCreate(savedInstanceState)
         binder?.toggleButton?.setOnCheckedChangeListener(this@MainActivity)
-        Coroutines.main(this@MainActivity, { scope ->
+        Coroutines.main(this@MainActivity) { scope ->
             scope.launch(block = {
                 binder?.getViewModel()?.observeNFCStatus()?.collectLatest(action = { status ->
                     Log.d(TAG, "observeNFCStatus $status")
@@ -65,11 +74,12 @@ public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeLis
                     binder?.textViewExplanation?.setText(tag)
                 })
             })
-        })
+        }
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if (buttonView == binder?.toggleButton)
+            binder?.getViewModel()?.onCheckNFC(isChecked)
             viewModel.onCheckNFC(isChecked)
     }
 
@@ -90,10 +100,18 @@ public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeLis
                             (payload[0].toInt() and 0x3F) + 1 // Extract the language code length
                         val languageCode =
                             String(payload.copyOfRange(1, languageCodeLength), Charsets.UTF_8)
+
+                        //This is storing the value on the nfc tag
                         val textPayload = String(
                             payload.copyOfRange(languageCodeLength, payload.size),
                             Charsets.UTF_8
                         )
+
+                        val split = textPayload.split("|")
+                        GlobalData.rollno = split[0]
+                        GlobalData.name = split[1]
+
+                        putData(split[0], split[1])
 
                         // Update UI with the extracted text payload
                         runOnUiThread {
@@ -111,6 +129,30 @@ public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeLis
             }
         }
     }
+
+    private fun putData(rollno: String, name: String) {
+
+        var urlString = "https://script.google.com/macros/s/AKfycbzLvQ4m0gdM-laTg7c1BwVNTMyJSIqU96XvfO0c898PlHGgBYvLru2TNdNsOGhvD6a1/exec"
+        urlString=urlString+"action=create&rollno=$rollno&name=$name"
+
+        val url = URL(urlString)
+        val connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "POST"
+        connection.doOutput = true
+
+        val postData = "rollno=$rollno&name=$name"
+        val outputStreamWriter = OutputStreamWriter(connection.outputStream)
+        outputStreamWriter.write(postData)
+        outputStreamWriter.flush()
+
+        val responseCode = connection.responseCode
+        println("Response Code: $responseCode")
+
+        connection.disconnect()
+
+    }
+
+
 
 
 }

@@ -133,11 +133,7 @@ public class MainViewModel : AndroidViewModel {
             postToast("NFC Not Supported!")
             liveTag.emit("NFC Not Supported!")
         }
-        if (NFCManager.isSupportedAndEnabled(getApplication()) && status == NFCStatus.Tap) {
-            liveTag.emit("Please Tap Now!")
-        } else {
-            liveTag.emit(null)
-        }
+
     }
 
     public fun observeNFCStatus() : StateFlow<NFCStatus?> {

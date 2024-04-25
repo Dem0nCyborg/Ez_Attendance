@@ -1,5 +1,6 @@
 package com.example.ez_attendance.login
 
+import ReadNFC
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ez_attendance.R
 import com.example.ez_attendance.databinding.ActivityUserSelectionBinding
+import com.example.ez_attendance.professor.profDetails
+import com.example.ez_attendance.professor.updateTimetable
+import com.example.ez_attendance.students.studentsDetails
 
 class UserSelection : AppCompatActivity() {
 
@@ -25,11 +29,11 @@ class UserSelection : AppCompatActivity() {
         }
 
         binding.cvProfessor.setOnClickListener {
-            startActivity(Intent(this, ProfessorLogin::class.java))
+            startActivity(Intent(this, updateTimetable::class.java))
         }
 
         binding.cvStudent.setOnClickListener {
-            startActivity(Intent(this, StudentLogin::class.java))
+            startActivity(Intent(this, studentsDetails::class.java))
         }
 
     }

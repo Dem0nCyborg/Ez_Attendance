@@ -2,4 +2,71 @@
     <string name="app_name">EZ_Attendance</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string-array name="Departments">
+        <item>CMPN-Computer Engineering</item>
+        <item>INFT-Information Technology</item>
+        <item>EXTC-Electronics and Telecommunication</item>
+        <item>ETRX-Electronics Engineering</item>
+    </string-array>
+
+    <string-array name="Class">
+        <item>First Year-FE</item>
+        <item>Second Year-SE</item>
+        <item>Third Year-TE</item>
+        <item>Fourth Year-BE</item>
+    </string-array>
+
+    <string-array name="Subject">
+        <item>MC-Mobile Computing</item>
+        <item>SPCC-System Programming and Compiler Construction</item>
+        <item>CC-CLoud Computing</item>
+        <item>CSS-Cryptography and System Security</item>
+        <item>IoT-Internet Of Things</item>
+    </string-array>
+
+    <string-array name="subjectElse">
+        <item>Subject 1</item>
+        <item>Subject 2</item>
+        <item>Subject 3</item>
+        <item>Subject 4</item>
+        <item>Subject 5</item>
+    </string-array>
+
+    <string-array name="Time">
+        <item>9:00 - 10:00</item>
+        <item>10:00 - 11:00</item>
+        <item>11:00 - 12:00</item>
+        <item>12:00 - 1:00</item>
+        <item>1:00 - 2:00</item>
+        <item>2:00 - 3:00</item>
+        <item>3:00 - 4:00</item>
+        <item>4:00 - 5:00</item>
+    </string-array>
+
+    <string-array name="lectureTime">
+        <item>9:00-10:00</item>
+        <item>10:00-11:00</item>
+        <item>11:00-12:00</item>
+        <item>12:00-01:00</item>
+        <item>01:00-02:00</item>
+        <item>02:00-03:00</item>
+        <item>03:00-04:00</item>
+        <item>04:00-05:00</item>
+    </string-array>
+
+    <string-array name="Days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
 </resources>
