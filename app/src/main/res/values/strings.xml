@@ -25,6 +25,7 @@
     <string-array name="Subject">
         <item>MC-Mobile Computing</item>
         <item>SPCC-System Programming and Compiler Construction</item>
+        <item>AI-Artificial Intelligence</item>
         <item>CC-CLoud Computing</item>
         <item>CSS-Cryptography and System Security</item>
         <item>IoT-Internet Of Things</item>

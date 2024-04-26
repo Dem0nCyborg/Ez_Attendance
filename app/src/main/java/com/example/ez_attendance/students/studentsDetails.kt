@@ -37,13 +37,13 @@ class studentsDetails : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.item_1 -> {
-                    Toast.makeText(this, "Item 1 selected", Toast.LENGTH_SHORT).show()
-                    true
+                    Toast.makeText(this, "Already There", Toast.LENGTH_SHORT).show()
+                    false
                 }
                 R.id.item_2 -> {
-                    startActivity(Intent(this, UserSelection::class.java))
-                    Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show()
-                    true
+                    startActivity(Intent(this, attendance::class.java))
+                    //Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show()
+                    false
                 }
                 else -> false
             }

@@ -16,10 +16,13 @@
         android:theme="@style/Theme.EZ_Attendance"
         tools:targetApi="31">
         <activity
-            android:name=".professor.updateTimetable"
+            android:name=".professor.Verification"
             android:exported="false" />
         <activity
-            android:name=".ReadNFC"
+            android:name=".students.attendance"
+            android:exported="false" />
+        <activity
+            android:name=".professor.updateTimetable"
             android:exported="false" />
         <activity
             android:name=".students.studentsDetails"

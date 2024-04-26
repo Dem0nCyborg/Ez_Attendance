@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".professor.profDetails">
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        android:src="@drawable/bg_green"
+        android:scaleY="1.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textView1"
@@ -100,9 +111,10 @@
             android:text="Lecture Time" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_submit"
-        style="@style/Widget.Material3.Button.ElevatedButton"
+
+        app:strokeColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"

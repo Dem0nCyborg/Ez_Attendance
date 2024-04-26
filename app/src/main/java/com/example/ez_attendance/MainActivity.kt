@@ -1,5 +1,6 @@
 package com.example.ez_attendance
 
+import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.Ndef
@@ -16,13 +17,12 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.ez_attendance.databinding.ActivityBinder
+import com.example.ez_attendance.professor.updateTimetable
+import com.example.ez_attendance.students.attendance
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
-import java.net.URL
 
 public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeListener, NfcAdapter.ReaderCallback {
 
@@ -44,6 +44,26 @@ public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeLis
         binder?.setViewModel(viewModel)
         binder?.setLifecycleOwner(this@MainActivity)
         super.onCreate(savedInstanceState)
+
+        binder?.bottomNavigation?.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.item_1 -> {
+                    //Toast.makeText(this, "Item 1 selected", Toast.LENGTH_SHORT).show()
+                    false
+                }
+
+                R.id.item_2 -> {
+                    startActivity(Intent(this, updateTimetable::class.java))
+                    //Toast.makeText(this, "Item 2 selected", Toast.LENGTH_SHORT).show()
+                    false
+                }
+
+                else -> false
+            }
+
+        }
+
+
         binder?.toggleButton?.setOnCheckedChangeListener(this@MainActivity)
         Coroutines.main(this@MainActivity) { scope ->
             scope.launch(block = {
@@ -111,7 +131,18 @@ public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeLis
                         GlobalData.rollno = split[0]
                         GlobalData.name = split[1]
 
-                        putData(split[0], split[1])
+                        if (GlobalData.subject=="SPCC-System Programming and Compiler Construction"){
+                            val url="https://script.google.com/macros/s/AKfycbyVYcJvv2nEKDdsdSWuXffH43316mCjdPwW6sb6dASY1sNYmtH9fgXzO8VhS73mJ9P2/exec"
+                            putData(GlobalData.rollno,GlobalData.name,url)
+                        }else if (GlobalData.subject=="AI-Artificial Intelligence"){
+                            val url = "https://script.google.com/macros/s/AKfycbw0Dzpp76WvIMnowIdd-UxG-I_BSz8W8od_teNDr4PHlZkg1oG2NVWGH9SByls1t5NxhA/exec"
+                            putData(GlobalData.rollno,GlobalData.name,url)
+                        }else if (GlobalData.subject=="CSS-Cryptography and System Security") {
+                            val url = "https://script.google.com/macros/s/AKfycbw3Va9DxOhuvyZNykrdY3LmoX2kQ-2iwXg74l0havczaMax83ECSeN_eGPbGqIFqJB7Bw/exec"
+                            putData(GlobalData.rollno,GlobalData.name,url)
+                        }
+
+
 
                         // Update UI with the extracted text payload
                         runOnUiThread {
@@ -130,26 +161,25 @@ public class MainActivity : AppCompatActivity, CompoundButton.OnCheckedChangeLis
         }
     }
 
-    private fun putData(rollno: String, name: String) {
+    private fun putData(rollno:String,name:String,url:String){
 
-        var urlString = "https://script.google.com/macros/s/AKfycbzLvQ4m0gdM-laTg7c1BwVNTMyJSIqU96XvfO0c898PlHGgBYvLru2TNdNsOGhvD6a1/exec"
-        urlString=urlString+"action=create&rollno=$rollno&name=$name"
+        val stringRequest=object :StringRequest(Request.Method.POST,url,
+            Response.Listener{
+                             Toast.makeText(this@MainActivity,it.toString(),Toast.LENGTH_SHORT).show()
+            },
+            Response.ErrorListener {
+                Toast.makeText(this@MainActivity, it.toString(), Toast.LENGTH_SHORT).show()
 
-        val url = URL(urlString)
-        val connection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "POST"
-        connection.doOutput = true
-
-        val postData = "rollno=$rollno&name=$name"
-        val outputStreamWriter = OutputStreamWriter(connection.outputStream)
-        outputStreamWriter.write(postData)
-        outputStreamWriter.flush()
-
-        val responseCode = connection.responseCode
-        println("Response Code: $responseCode")
-
-        connection.disconnect()
-
+            }){
+            override fun getParams(): MutableMap<String, String>? {
+                val params = HashMap<String,String>()
+                params["rollno"]=rollno
+                params["name"]=name
+                return params
+            }
+        }
+        val queue = Volley.newRequestQueue(this@MainActivity)
+        queue.add(stringRequest)
     }
 
 

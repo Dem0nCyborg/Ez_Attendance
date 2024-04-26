@@ -54,11 +54,11 @@ class updateTimetable : AppCompatActivity() {
             val selectedLec = parent.getItemAtPosition(position).toString()
             lec = selectedLec
         }
-        var value = binding.etSubject.text.toString().toUpperCase()
+
 
 
         binding.btnAdd.setOnClickListener {
-            binding.etSubject.clearFocus()
+            val value = binding.etSubject.text.toString().uppercase()
             if (day == null || lec == null || value == null) {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

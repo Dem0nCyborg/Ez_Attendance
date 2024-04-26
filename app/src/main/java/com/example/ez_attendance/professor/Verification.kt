@@ -1,25 +1,23 @@
-package com.example.ez_attendance.login
+package com.example.ez_attendance.professor
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ez_attendance.R
-import com.example.ez_attendance.databinding.ActivityUserSelectionBinding
-import com.example.ez_attendance.professor.Verification
-import com.example.ez_attendance.professor.profDetails
-import com.example.ez_attendance.students.studentsDetails
+import com.example.ez_attendance.databinding.ActivityVerificationBinding
 
-class UserSelection : AppCompatActivity() {
+class Verification : AppCompatActivity() {
 
-    private lateinit var binding: ActivityUserSelectionBinding
+    lateinit var binding : ActivityVerificationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding= ActivityUserSelectionBinding.inflate(layoutInflater)
+        binding = ActivityVerificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -27,12 +25,15 @@ class UserSelection : AppCompatActivity() {
             insets
         }
 
-        binding.cvProfessor.setOnClickListener {
-            startActivity(Intent(this, Verification::class.java))
-        }
+        val syspass = "1234"
 
-        binding.cvStudent.setOnClickListener {
-            startActivity(Intent(this, studentsDetails::class.java))
+        binding.btnSubmit.setOnClickListener {
+            if (binding.etPassword.text.toString() == syspass) {
+                startActivity(Intent(this, profDetails::class.java))
+                finish()
+            } else {
+                Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
